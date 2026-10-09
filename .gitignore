@@ -1,0 +1,6 @@
+# Build outputs
+/bin/
+/obj/
+
+# Local course materials
+/lab1.docx
