@@ -1,0 +1,7 @@
+# Build outputs
+/bin/
+/obj/
+
+# Temporary files
+.qemu.out
+.gdb.in
