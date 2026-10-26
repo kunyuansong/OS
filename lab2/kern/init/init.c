@@ -1,6 +1,7 @@
 #include <console.h>
 #include <defs.h>
 #include <pmm.h>
+#include <slub.h>
 #include <stdio.h>
 #include <string.h>
 #include <dtb.h>
@@ -12,7 +13,7 @@ void print_kerninfo(void);
 /* *
  * print_kerninfo - print the information about kernel, including the location
  * of kernel entry, the start addresses of data and text segements, the start
- * address of free memory and how many memory that kernel has used.
+ * of free memory and how many memory that kernel has used.
  * */
 void print_kerninfo(void) {
     extern char etext[], edata[], end[];
@@ -29,18 +30,15 @@ int kern_init(void) {
     extern char edata[], end[];
     memset(edata, 0, end - edata);
     dtb_init();
-    cons_init();  // init the console
+    cons_init();
     const char *message = "(THU.CST) os is loading ...\0";
-    //cprintf("%s\n\n", message);
     cputs(message);
-
     print_kerninfo();
 
-    // grade_backtrace();
-    pmm_init();  // init physical memory management
+    pmm_init();
+    slub_init();
+    slub_check();
 
-    /* do nothing */
     while (1)
         ;
 }
-
